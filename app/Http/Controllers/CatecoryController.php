@@ -11,7 +11,7 @@ class CatecoryController extends Controller
      */
     public function index()
     {
-        //
+        return view ('dashboard.category.index');
     }
 
     /**
@@ -19,7 +19,7 @@ class CatecoryController extends Controller
      */
     public function create()
     {
-        //
+        return view ('dashboard.category.create');
     }
 
     /**

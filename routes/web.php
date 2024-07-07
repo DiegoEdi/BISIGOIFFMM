@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
  //importamos los controladores
-use App\Http\Controllers\ArticleControlle;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CatecoryController;
 use App\Http\Controllers\Income_detailController;
 use App\Http\Controllers\IncomeController;
@@ -24,8 +24,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});  
+//Rutas de nuestra app
+    Route::resource('/dashboard/article',ArticleController::class);
+    Route::resource('/dashboard/category',CatecoryController::class); 
+    //Route::resource('/dashboard/Article',Income_detailController::class); 
+    //Route::resource('/dashboard/Article',IncomeController::class); 
+    Route::resource('/dashboard/Person',PersonController::class); 
+    //Route::resource('/dashboard/Article',Sale_detailController::class);   
+    //Route::resource('/dashboard/Article',SaleController::class); 
+});   
+ 
 
-Route::resourse('Articles',ArticleControlle::class);
 
 require __DIR__.'/auth.php';
+ 
