@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category; 
 
 class CatecoryController extends Controller
 {
@@ -11,7 +12,8 @@ class CatecoryController extends Controller
      */
     public function index()
     {
-        return view ('dashboard.category.index');
+        $category=Category::all();
+        return view ('dashboard.category.index',['category'=>$category]);
     }
 
     /**
