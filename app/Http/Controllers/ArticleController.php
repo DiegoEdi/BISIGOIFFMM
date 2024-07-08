@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Models\Article;
+use App\Models\Category;
 
 class ArticleController extends Controller
 {
@@ -11,15 +12,17 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view ('dashboard.article.index');   
+        $article= Article::all();
+        return view ('dashboard.article.index',['article'=>$article]);   
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create()  
     {
-        //
+        $category=Category::all();
+        return view('dashboard.article.create',['category'=>$category]);
     }
 
     /**
@@ -27,7 +30,16 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $article= new Article(); 
+         $article->code=$request->input('code');
+         $article->name=$request->input('name');
+         $article->Sale_Price=$request->input('Sale_Price');
+         $article->stock=$request->input('stock');
+         $article->description=$request->input('description');
+         $article->state=$request->input('state');
+         $article->idcategory=$request->input('category');
+         $article->save();
+         return view("dashboard.article.message",['msg'=>"Articulo creado con exito"]);
     }
 
     /**
@@ -43,7 +55,8 @@ class ArticleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $article=Article:: find($id);
+         return view('dashboard.article.edit',['article'=>$article,'category'=>Category::all()]);
     }
 
     /**
@@ -51,7 +64,16 @@ class ArticleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $category=Article::find($id);
+        $article->code=$request->input('code');
+        $category->name=$request->input('name');
+        $category->Sale_Price=$equest->input('Sale_Price');
+        $category->Stock=$request->input('Stock');
+        $category->description=$request->input('description');
+        $category->state=$request->input('state');
+        $category->idcategory=$request->input('category');
+        $category->save();
+        return view("dashboard.article.message", ['msg'=>"Articulo Actualizado con Exito"]);
     }
 
     /**
@@ -59,6 +81,8 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $article=Article::find(id);
+        $article->delete();
+        return redirect("dashboard/article");
     }
 }
