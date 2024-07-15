@@ -29,7 +29,22 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-       //
+        $request->validate([
+            'provider_id' => 'required|exists:people,id',
+            'user_id' => 'required|exists:users,id',
+            'receipt_type' => 'required|string|max:20',
+            'receipt_series' => 'nullable|string|max:7',
+            'receipt_number' => 'required|string|max:10',
+            'date' => 'required|date',
+            'tax' => 'required|numeric|between:0,99.99',
+            'total' => 'required|numeric|between:0,99999999.99',
+            'status' => 'required|string|max:20',
+
+        ]);
+
+        $income = Income::create($request->all());
+        return response()->json($income, 201);
+
     }
 
     /**
@@ -37,8 +52,8 @@ class IncomeController extends Controller
      */
     public function show(string $id)
     {
-        $income=income::find(id);
-        return view ('dashboard.income.edit',['category'=>$income]);
+        $income = Income::findOrFail($id);
+        return response()->json($income);
     }
 
     /**
@@ -54,7 +69,21 @@ class IncomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'provider_id' => 'required|exists:people,id',
+            'user_id' => 'required|exists:users,id',
+            'receipt_type' => 'required|string|max:20',
+            'receipt_series' => 'nullable|string|max:7',
+            'receipt_number' => 'required|string|max:10',
+            'date' => 'required|date',
+            'tax' => 'required|numeric|between:0,99.99',
+            'total' => 'required|numeric|between:0,99999999.99',
+            'status' => 'required|string|max:20',
+        ]);
+
+        $income = Income::findOrFail($id);
+        $income->update($request->all());
+        return response()->json($income);
     }
 
     /**
@@ -62,6 +91,8 @@ class IncomeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $income = Income::findOrFail($id);
+        $income->delete();
+        return response()->json(null, 204);
     }
 }
