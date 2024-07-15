@@ -26,7 +26,31 @@
                         {{ __('Articulo') }}
                     </x-nav-link>
                 </div>
-            </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/person')" :active="request()->routeIs('person')">
+                        {{ __('Persona') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/Income')" :active="request()->routeIs('Income')">
+                        {{ __('Ingresos') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/Income_details')" :active="request()->routeIs('Income_details')">
+                        {{ __('Detalle de los Ingresos') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/Sale')" :active="request()->routeIs('Sale')">
+                        {{ __('Venta') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="url('dashboard/Sale_details')" :active="request()->routeIs('Sale_details')">
+                        {{ __('Detalle de Venta') }}
+                    </x-nav-link>
+                </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">

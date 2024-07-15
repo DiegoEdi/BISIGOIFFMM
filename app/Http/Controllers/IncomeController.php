@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Income;
 use Illuminate\Http\Request;
 
 class IncomeController extends Controller
@@ -11,7 +12,8 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        //
+        $incomes = Income::all();
+        return response()->json($incomes);
     }
 
     /**
@@ -27,7 +29,7 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //
     }
 
     /**
@@ -35,7 +37,8 @@ class IncomeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $income=income::find(id);
+        return view ('dashboard.income.edit',['category'=>$income]);
     }
 
     /**
