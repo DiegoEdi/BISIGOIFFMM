@@ -81,7 +81,7 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        $article=Article::find(id);
+        $article=Article::find($id);
         $article->delete();
         return redirect("dashboard/article");
     }

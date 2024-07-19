@@ -6,7 +6,7 @@
 <div class="container py-4">
     <h1>Registro de datos personales</h1>
     <br>
-    <a href="{{url('dashboard/Person/create')}}"class="btn btn-primary btn-sm">Nueva Persona</a>
+    <a href="{{url('dashboard/person/create')}}"class="btn btn-primary btn-sm">Nueva Persona</a>
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -19,9 +19,7 @@
                 <th>Direccion</th>
                 <th>Telefono</th>
                 <th>Correo electronico</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-                
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -34,21 +32,22 @@
                 <td>{{$person->Document_Type}}</td>
                 <td>{{$person->Document_Number}}</td>
                 <td>{{$person->Adress}}</td>
-                <td>{{$person->Phone?_ ('activo'): _('inactivo')}}</td>
+                <td>{{$person->Phone}}</td>
                 <td>{{$person->Email}}</td>
-                <td>{{$person->create_at }}</td>
-                <td>{{$person->update_at}}</td>
                 <td>
-                    <a href="{{url('dashboard/person/'.$person->id.'/edit') }}" class="bi bi-pencil"></a>
+                    <div class="btn-group" role="group">
+                        <a href="{{ url('dashboard/person/'.$person->id.'/create') }}" class="btn btn-success mx-1">Crear</a>
+                        
+                        <a href="{{ url('dashboard/person/'.$person->id.'/edit') }}" class="btn btn-warning mx-1">Editar</a>
+                        
+                        <form action="{{ url('dashboard/person/'.$person->id) }}" method="post" class="d-inline">
+                            @method("DELETE")
+                            @csrf
+                            <button type="submit" class="btn btn-danger mx-1">Eliminar</button>
+                        </form>
+                    </div>
                 </td>
-                <td>
-                    <form action="{{url('dashboard/person/'.$person->id)}}" method="post">
-                        @method("DELETE")
-                        @csrf
-                        <button class="bi bi-eraser-fill" type="submit" ></button>
-                    <form>    
-                </td>
-
+                
             </tr>
             <tr>
                 <td scope="row"></td>

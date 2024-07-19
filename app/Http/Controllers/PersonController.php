@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\People; 
+use App\Models\Category;
 
-class PeopleController extends Controller
+class PersonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $person=Person::all();
-        return view ('dashboard.Person.index',['Person'=>$person]);
+        $person=People::all();
+        return view ('dashboard.person.index',['person'=>$person]);
     }
 
     /**
@@ -23,7 +24,7 @@ class PeopleController extends Controller
     {
         $providers = person::where ('type','proveedor');
         $users = Auth::user(); 
-        return view ('dashboard.Person.create',['providers'=> $providers ,'user' => $users ]);
+        return view ('dashboard.person.create',['providers'=> $providers ,'user' => $users ]);
     }
 
     /**
@@ -49,7 +50,7 @@ class PeopleController extends Controller
      */
     public function show(string $id)
     {
-        return view ('dashboard.Person.edit',['category'=>$person]);
+        return view ('dashboard.person.edit',['category'=>$category]);
     }
 
     /**
@@ -57,8 +58,8 @@ class PeopleController extends Controller
      */
     public function edit(string $id)
     {
-        $person=Person::find(id);
-        return view ('dashboard.Person.edit',['category'=>$person]);
+        $person=People::find($id);
+        return view('dashboard.person.edit',['person'=>$person,'category'=>Category::all()]);
     }
 
     /**
@@ -66,7 +67,7 @@ class PeopleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $person= new Person();
+        $person= new People();
         $person->type=$request->input('type');
         $person->First_Name=$request->input('First_Name');
         $person->Last_Name=$request->input('Last_Name');
@@ -84,8 +85,8 @@ class PeopleController extends Controller
      */
     public function destroy(string $id)
     {
-        $person=Person::find($id);
+        $person=People::find($id);
         $person->delete();
-        return redirect ("dashboard/person");
+        return redirect("dashboard/person");
     }
 }

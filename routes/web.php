@@ -26,10 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 //Rutas de nuestra app
     Route::resource('/dashboard/article',ArticleController::class);
-    Route::resource('/dashboard/category',CatecoryController::class); 
+    Route::resource('/dashboard/category',CatecoryController::class);
+    Route::resource('/dashboard/person',PersonController::class);  
     Route::resource('/dashboard/Article',Income_detailController::class); 
     Route::resource('/dashboard/Article',IncomeController::class); 
-    Route::resource('/dashboard/Person',PersonController::class); 
     //Route::resource('/dashboard/Article',Sale_detailController::class);   
     //Route::resource('/dashboard/Article',SaleController::class); 
 });   
