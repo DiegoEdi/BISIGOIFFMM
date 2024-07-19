@@ -36,18 +36,17 @@
                 <td>{{$person->Email}}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ url('dashboard/person/'.$person->id.'/create') }}" class="btn btn-success mx-1">Crear</a>
+                        <a href="{{ url('dashboard/person/'.$person->id.'/create') }}" class="btn btn-success mx-1 custom-btn" style="font-size: 16px; padding: 4px 20px; height: 40px; display: flex; align-items: center; justify-content: center; min-width: 100px; margin: 0 5px;">Crear</a>
                         
-                        <a href="{{ url('dashboard/person/'.$person->id.'/edit') }}" class="btn btn-warning mx-1">Editar</a>
+                        <a href="{{ url('dashboard/person/'.$person->id.'/edit') }}" class="btn btn-warning mx-1 custom-btn" style="font-size: 16px; padding: 4px 20px; height: 40px; display: flex; align-items: center; justify-content: center; min-width: 100px; margin: 0 5px;">Editar</a>
                         
                         <form action="{{ url('dashboard/person/'.$person->id) }}" method="post" class="d-inline">
                             @method("DELETE")
                             @csrf
-                            <button type="submit" class="btn btn-danger mx-1">Eliminar</button>
+                            <button type="submit" class="btn btn-danger mx-1 custom-btn" style="font-size: 16px; padding: 4px 20px; height: 40px; display: flex; align-items: center; justify-content: center; min-width: 100px; margin: 0 5px;">Eliminar</button>
                         </form>
-                    </div>
+                    </div>                                                     
                 </td>
-                
             </tr>
             <tr>
                 <td scope="row"></td>
