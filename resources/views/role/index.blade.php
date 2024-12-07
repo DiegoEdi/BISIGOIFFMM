@@ -4,6 +4,47 @@
             {{ __('Roles') }}
         </h2>
     </x-slot>
-     Esta es la vista de roles
+    <div>
+        <a href="{{url('role/create')}}">Nuevo Rol</a>
+    </div>
+     <table class="table table-dark"> 
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Permisos</th>
+                <th>Editar </th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+         <tbody> 
+            @foreach ($roles as $rol)
+            <tr>
+                <td>{{ $rol->name }}</td>
+                <td>
+                    @forelse ($rol ->permissions as $permission)
+                   <span>{{$permission->name}}</span> 
+                @empty
+                <sanp>
+                    No Tiene Permisos Asignados. 
+                </sanp>
+                    
+                @endforelse
+                </td>
+                <td> 
+                    <a href="{{url('role/'.$rol->id.'/edit')}}">Editar</a>
+                </td>
+                <td>
+                    <form action="{{url('role/'.$rol->id)}}"method="post">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit">Eliminar</button>
+                     </form>
+                </td> 
 
-</x-app-layout>
+            </tr>
+                
+            @endforeach
+         </tbody>
+     </table>
+
+</x-app-layout> 

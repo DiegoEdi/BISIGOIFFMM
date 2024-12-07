@@ -15,15 +15,16 @@ class Rolecontroller extends Controller
     public function index()
     {
         $roles=Role::all();
-        return view ('role.index',['roles'=>$roles]);
+        return view('role.index',['roles'=>$roles]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. 
      */
     public function create()
     {
-        //
+        $permission=Permission:: all()->pluck(value:'name',key:'id');
+        return view('role.create',compact('permission'));
     }
 
     /**
@@ -31,7 +32,10 @@ class Rolecontroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $role=Role::create($request ->only('name'));
+        $role->permissions()->sync($request->input('permission',[]));
+        return redirect()->route('role.index');
+         
     }
 
     /**
