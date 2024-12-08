@@ -47,6 +47,18 @@
       <div>  </div>
     </div>
     <div class="form-group row">
+        <label for="update_date" class="col-sm-2 col-form-label">Fecha de Actualización</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" name="update_date" id="update_date" placeholder="Selecciona la fecha de actualización">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="created_at" class="col-sm-2 col-form-label">Fecha de Creación</label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" name="created_at" id="created_at" placeholder="Selecciona la fecha de creación">
+        </div>
+    </div>    
+    <div class="form-group row">
         <label for="state">Estado</label>
         <div class="col-sm-10">
             <select class="form-control" name="state" id="state">
