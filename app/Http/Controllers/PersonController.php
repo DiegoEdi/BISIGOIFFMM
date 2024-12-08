@@ -22,9 +22,10 @@ class PersonController extends Controller
      */
     public function create()
     {
-        $providers = person::where ('type','proveedor');
-        $users = Auth::user(); 
-        return view ('dashboard.person.create',['providers'=> $providers ,'user' => $users ]);
+        $providers =People::where ('type','proveedor');
+        $user = auth()->user();
+
+        return view ('dashboard.person.create',['providers'=> $providers ,'user' => $user ]);
     }
 
     /**
@@ -32,7 +33,7 @@ class PersonController extends Controller
      */
     public function store(Request $request)
     {
-        $person= new Person();
+        $person= new People();
         $person->type=$request->input('type');
         $person->First_Name=$request->input('First_Name');
         $person->Last_Name=$request->input('Last_Name');
@@ -42,7 +43,8 @@ class PersonController extends Controller
         $person->Phone=$request->input('Phone');
         $person->Email=$request->input('Email');
         $person->save();
-        return view ("dashboard.person.message",['msg'=>"Registro agregado con exito"]);
+        $person=People::all();
+        return view ('dashboard.person.index',['person'=>$person]);
     }
 
     /**
@@ -60,6 +62,7 @@ class PersonController extends Controller
     {
         $person=People::find($id);
         return view('dashboard.person.edit',['person'=>$person,'category'=>Category::all()]);
+
     }
 
     /**
@@ -67,7 +70,8 @@ class PersonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $person= new People();
+        // Buscar la persona por su ID
+        $person = People::find($id);
         $person->type=$request->input('type');
         $person->First_Name=$request->input('First_Name');
         $person->Last_Name=$request->input('Last_Name');
@@ -77,9 +81,12 @@ class PersonController extends Controller
         $person->Phone=$request->input('Phone');
         $person->Email=$request->input('Email');
         $person->save();
-        return view ("dashboard.person.message",['msg'=>"Registro agregado con exito"]);
+        $person=People::all();
+        return view ('dashboard.person.index',['person'=>$person]);
+
     }
 
+        //return view ("dashboard.person.message",['msg'=>"Registro agregado con exito"]); 
     /**
      * Remove the specified resource from storage.
      */

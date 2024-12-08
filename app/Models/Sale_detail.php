@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Sale_detail extends Model
 {
     use HasFactory;
+    
 }

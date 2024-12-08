@@ -32,9 +32,10 @@ class CatecoryController extends Controller
         $category= new Category();
         $category->name=$request->input('name');
         $category->description=$request->input('description');
-        $category->estate=$request->input('state');
+        $category->state=$request->input('state');
         $category->save();
-        return view ("dashboard.category.message",['msg'=>"Categoria agregada con Exito"]);
+        $category=Category::all();
+        return view ('dashboard.category.index',['category'=>$category]);
 
     }
 
@@ -51,7 +52,7 @@ class CatecoryController extends Controller
      */
     public function edit ($id)
     {
-        $category=Category::find(id);
+        $category=Category::find($id);
         return view ('dashboard.category.edit',['category'=>$category]);
     }
 
@@ -65,7 +66,8 @@ class CatecoryController extends Controller
         $category->description=$request->input ('description');
         $category->state=$request->input('state');
         $category->save();
-        return view("dashboard.category.message", ['msg'=>"Categoria Actualizada con Exito"]);
+        $category=Category::all();
+        return view ('dashboard.category.index',['category'=>$category]);
     }
 
     /**

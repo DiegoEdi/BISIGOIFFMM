@@ -10,8 +10,9 @@
             <label for='name'>Nombre del Rol</label>
             <div>
                 <input type="text" name="name" id="name ">
+                value="{{ $role->name}}">
             </div>
-        </div>
+        </div> 
         <div>
              <label for="permissions">Permisos del Rol</label>
         </div>
@@ -20,8 +21,10 @@
                  <tbody>
                      @foreach ($permission  as $id=>$permission)
                      <tr>
-                        <td>
-                            <input type="checkbox" name="permission[]" value="{{ $id }}" >
+                        <td> 
+                            <input type="checkbox" name="permission[]" value="{{ $id }}"
+                            {{$role->permissions->contains($id) ? 'checkd' :''}}
+                            >
                             {{$permission }}
                         </td>
                      </tr>
@@ -31,7 +34,7 @@
             </table>
             <div>
                 <button type="submit"> Guardar</button> 
-                <a href="{{url('role')}}">Cancelar</a>
+                <a href="{{url('dashboard/role')}}">Cancelar</a>
             </div>
         </div>
     </form>

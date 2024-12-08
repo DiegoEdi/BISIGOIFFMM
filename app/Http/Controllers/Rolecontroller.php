@@ -15,7 +15,7 @@ class Rolecontroller extends Controller
     public function index()
     {
         $roles=Role::all();
-        return view('role.index',['roles'=>$roles]);
+        return view('dashboard.role.index',['roles'=>$roles]);
     }
 
     /**
@@ -24,7 +24,7 @@ class Rolecontroller extends Controller
     public function create()
     {
         $permission=Permission:: all()->pluck(value:'name',key:'id');
-        return view('role.create',compact('permission'));
+        return view('dashboard.role.create',compact('permission'));
     }
 
     /**
@@ -32,7 +32,7 @@ class Rolecontroller extends Controller
      */
     public function store(Request $request)
     {
-         $role=Role::create($request ->only('name'));
+        $role= Role::create($request->only('name'));
         $role->permissions()->sync($request->input('permission',[]));
         return redirect()->route('role.index');
          
@@ -49,9 +49,11 @@ class Rolecontroller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        $role -> load('permissions');
+        $permission= Permission::all()->pluck(value:'name',key:'id');
+        return view('dashboard.role.edit',compact('role','permission'));
     }
 
     /**
@@ -65,8 +67,10 @@ class Rolecontroller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $rol=Role::find($id);
+        DB::table ('roles')->where('id',$id)->delete(); 
+        return redirect()->route('role.index'); 
     }
 }

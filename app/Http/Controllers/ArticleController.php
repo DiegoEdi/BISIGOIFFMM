@@ -39,7 +39,8 @@ class ArticleController extends Controller
          $article->state=$request->input('state');
          $article->idcategory=$request->input('category');
          $article->save();
-         return view("dashboard.article.message",['msg'=>"Articulo creado con exito"]);
+         $article= Article::all();
+         return view ('dashboard.article.index',['article'=>$article]);  
     }
 
     /**
@@ -85,4 +86,7 @@ class ArticleController extends Controller
         $article->delete();
         return redirect("dashboard/article");
     }
+
+    
+
 }
