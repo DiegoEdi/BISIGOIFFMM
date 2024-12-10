@@ -10,7 +10,7 @@
         <div style="color: white;">
             <label for="name">Nombre del Rol</label>
             <div>
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" style="color: black;" >
             </div>
         </div>
         

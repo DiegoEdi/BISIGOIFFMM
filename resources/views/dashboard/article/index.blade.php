@@ -3,10 +3,10 @@
 @include('layouts/navigation')
 @section('contenido')
 
-<div class="container py-4">
-    <h1>Listado de Articulos</h1>
+<div class='container py-4'>
+    <h1>Listado de articulo</h1>
     <br>
-    <a href="{{url('dashboard/article/create')}}"class="btn btn-primary btn-sm">Nuevo articulo</a>
+    <a href="{{url('dashboard/article/create')}}" class='btn btn-primary btn-sm'>Nuevo Articulo</a>
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -18,8 +18,8 @@
                 <th>Descripcion</th>
                 <th>Estado</th>
                 <th>Categoria</th>
-                <th>FechaCreacion</th>
-                <th>FechaActualizacion</th>
+                <th>Fecha de Creacion</th>
+                <th>Fecha de Actualizacion</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
@@ -30,34 +30,32 @@
                 <td scope="row">{{$article->id}}</td>
                 <td>{{$article->code}}</td>
                 <td>{{$article->name}}</td>
-                <td>{{$article->sale_price}}</td>
+                <td>{{$article->Sale_Price}}</td>
                 <td>{{$article->stock}}</td>
                 <td>{{$article->description}}</td>
-                <td>{{$article->state ?_ ('activo'): _('inactivo')}}</td>
+                <td>{{$article->state ? _('activo') : _('inactivo')}}</td>
                 <td>{{$article->category}}</td>
-                <td>{{$article->create_at }}</td>
-                <td>{{$article->update_at}}</td>
+                <td>{{$article->created_at}}</td>
+                <td>{{$article->updated_at}}</td>
                 <td>
-                    <a href="{{url('dashboard/article/'.$article->id.'/edit') }}" class="bi bi-pencil"></a>
+                    <a href="{{ url('dashboard/article/'.$article->id.'/edit')}}" class="bi bi-pencil-square"></a>
                 </td>
                 <td>
-                    <form action="{{url('dashboard/article/'.$article->id)}}" method="post">
+                    <form action="{{ url('dashboard/article/'.$article->id) }}" method="post">
                         @method("DELETE")
                         @csrf
-                        <button class="bi bi-eraser-fill" type="submit" ></button>
-                    <form>    
+                        <button class="bi bi-eraser-fill" type="submit"></button>
+                    </form>
                 </td>
-
             </tr>
             <tr>
                 <td scope="row"></td>
                 <td></td>
                 <td></td>
             </tr>
-            @endforeach 
+            @endforeach
         </tbody>
     </table>
+
 </div>
-
-
-@endsection  
+@endsection

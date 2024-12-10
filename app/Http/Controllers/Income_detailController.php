@@ -2,63 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IncomeDetail;
+use App\Models\Income;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
-class Income_detailController extends Controller
+class IncomeDetailController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de todos los detalles de ingreso.
      */
     public function index()
     {
-        //
+        $incomeDetails = IncomeDetail::with('income', 'article')->get();
+        return view('dashboard.income-detail.index', compact('incomeDetails'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear un nuevo detalle de ingreso.
      */
     public function create()
     {
-        //
+        $incomes = Income::all();
+        $articles = Article::all();
+        return view('dashboard.income-detail.create', compact('incomes', 'articles'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo detalle de ingreso en la base de datos.
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'income_id' => 'required|exists:incomes,id',
+            'article_id' => 'required|exists:articles,id',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        IncomeDetail::create($validated);
+
+        return redirect()->route('income-details.index')->with('success', 'Detalle de ingreso creado exitosamente.');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra un detalle de ingreso específico.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $incomeDetail = IncomeDetail::with('income', 'article')->findOrFail($id);
+        return view('dashboard.income-detail.show', compact('incomeDetail'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar un detalle de ingreso.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $incomeDetail = IncomeDetail::findOrFail($id);
+        $incomes = Income::all();
+        $articles = Article::all();
+        return view('dashboard.income-detail.edit', compact('incomeDetail', 'incomes', 'articles'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un detalle de ingreso en la base de datos.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            'income_id' => 'required|exists:incomes,id',
+            'article_id' => 'required|exists:articles,id',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $incomeDetail = IncomeDetail::findOrFail($id);
+        $incomeDetail->update($validated);
+
+        return redirect()->route('income-details.index')->with('success', 'Detalle de ingreso actualizado exitosamente.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina un detalle de ingreso de la base de datos.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $incomeDetail = IncomeDetail::findOrFail($id);
+        $incomeDetail->delete();
+
+        return redirect()->route('income-details.index')->with('success', 'Detalle de ingreso eliminado exitosamente.');
     }
 }

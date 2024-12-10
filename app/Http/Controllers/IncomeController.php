@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Person;
 use App\Models\Income;
 use Illuminate\Http\Request;
-
 class IncomeController extends Controller
 {
     /**
@@ -12,8 +14,8 @@ class IncomeController extends Controller
      */
     public function index()
     {
-        $incomes = Income::all();
-        return response()->json($incomes);
+        $income=Income::all();
+        return view('dashboard.income.index',['income'=>$income]);
     }
 
     /**
@@ -21,7 +23,10 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        //
+        $person = Person::all();
+        $user = User::all();
+
+        return view('dashboard.income.create',['user'=>$user],['person'=>$person]);
     }
 
     /**
@@ -29,22 +34,18 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'provider_id' => 'required|exists:people,id',
-            'user_id' => 'required|exists:users,id',
-            'receipt_type' => 'required|string|max:20',
-            'receipt_series' => 'nullable|string|max:7',
-            'receipt_number' => 'required|string|max:10',
-            'date' => 'required|date',
-            'tax' => 'required|numeric|between:0,99.99',
-            'total' => 'required|numeric|between:0,99999999.99',
-            'status' => 'required|string|max:20',
-
-        ]);
-
-        $income = Income::create($request->all());
-        return response()->json($income, 201);
-
+        $income= new income();
+        $income->provider_id=$request->input('provider_id');
+        $income->user_id=$request->input('user_id');
+        $income->receipt_type=$request->input('receipt_type');
+        $income->receipt_series=$request->input('receipt_series');
+        $income->receipt_number=$request->input('receipt_number');
+        $income->date=$request->input('date');
+        $income->tax=$request->input('tax');
+        $income->total=$request->input('total');
+        $income->status=$request->input('status');
+        $income->save();
+        return view("dashboard.income.message",['msg'=>"El ingreso ha sido agregado con Exito"]);
     }
 
     /**
@@ -52,8 +53,7 @@ class IncomeController extends Controller
      */
     public function show(string $id)
     {
-        $income = Income::findOrFail($id);
-        return response()->json($income);
+        //
     }
 
     /**
@@ -61,38 +61,39 @@ class IncomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $income = Income::find($id);
+        $providers = Person::all();
+        $users = User::all();
+        return view('dashboard.income.edit',['income'=>$income],['user'=>$user],['person'=>$person]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,string $id)
     {
-        $request->validate([
-            'provider_id' => 'required|exists:people,id',
-            'user_id' => 'required|exists:users,id',
-            'receipt_type' => 'required|string|max:20',
-            'receipt_series' => 'nullable|string|max:7',
-            'receipt_number' => 'required|string|max:10',
-            'date' => 'required|date',
-            'tax' => 'required|numeric|between:0,99.99',
-            'total' => 'required|numeric|between:0,99999999.99',
-            'status' => 'required|string|max:20',
-        ]);
-
-        $income = Income::findOrFail($id);
-        $income->update($request->all());
-        return response()->json($income);
+        $income=income::find($id);
+        $income->provider_id=$request->input('provider_id');
+        $income->user_id=$request->input('user_id');
+        $income->receipt_type=$request->input('receipt_type');
+        $income->receipt_series=$request->input('receipt_series');
+        $income->receipt_number=$request->input('receipt_number');
+        $income->date=$request->input('date');
+        $income->tax=$request->input('tax');
+        $income->total=$request->input('total');
+        $income->status=$request->input('status');
+        $income->save();
+        return view("dashboard.income.message",['msg'=>"El ingreso ha sido Actualizado con Exito"]);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        $income = Income::findOrFail($id);
+        $income=Income::find($id);
         $income->delete();
-        return response()->json(null, 204);
-    }
+        return redirect("dashboard/income");
+}
 }
